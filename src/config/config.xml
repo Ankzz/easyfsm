@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : config.xml
+    Created on : 22 March, 2013, 9:05 AM
+    Author     : ANKIT
+    Description:
+        File specifies states and transition of an FSM.
+        This is an example file.
+-->
+
+<FSM>
+	<STATE id="START" type="ID">
+		<MESSAGE id="MOVE" action="move" nextState="START"/>
+		<MESSAGE id="MOVELEFT" action="moveLeft" nextState="INTERMEDIATE"/>
+		<MESSAGE id="MOVERIGHT" action="moveRight" nextState="STOP"/>
+	</STATE>
+	<STATE id="INTERMEDIATE">
+		<MESSAGE id="MOVELEFT" action="moveLeft" nextState="STOP"/>
+		<MESSAGE id="MOVERIGHT" action="moveRight" nextState="ANKIT"/>
+	</STATE>
+	<STATE id="STOP">
+	</STATE>
+	<STATE id="ANKIT">
+	</STATE>
+	
+</FSM>
