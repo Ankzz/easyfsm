@@ -9,7 +9,7 @@
 
 **<a href="#toc2-17">To build</a>**
 
-**<a href="#toc2-23">To Use Library:</a>**
+**<a href="#toc2-23">To Use Library</a>**
 
 **<a href="#toc2-30">Usage</a>**
 
@@ -28,8 +28,8 @@ Current library has been built as Java Library Project in Netbeans 7.0.1
 Source code (EasyFSM.zip) can be extracted and built in a Netbeans IDE 
 or can even be ported to an Eclipse environment.
 
-<A name="toc2-23" title="To Use Library:" />
-## To Use Library:
+<A name="toc2-23" title="To Use Library" />
+## To Use Library
 
 Add EasyFSM.jar to the Java Library folder of your project or Java Installation.
 Ensure that the CLASSPATH variable of your build environment has the EasyFSM.jar
