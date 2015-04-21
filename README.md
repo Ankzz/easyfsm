@@ -1,5 +1,5 @@
-<A name="toc1-0" title="EasyFSM - A Java Library; to facilitate Finite State Machine (FSM) creation." />
-# EasyFSM - A Java Library; to facilitate Finite State Machine (FSM) creation.
+<A name="toc1-0" title="EasyFSM - A Java Library to facilitate Finite State Machine (FSM) creation." />
+# EasyFSM - A Java Library to facilitate Finite State Machine (FSM) creation.
 
 <A name="toc2-3" title="Contents" />
 ## Contents
