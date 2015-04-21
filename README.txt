@@ -1,4 +1,4 @@
-# EasyFSM - A Java Library; to facilitate Finite State Machine (FSM) creation.
+# EasyFSM - A Java Library to facilitate Finite State Machine (FSM) creation.
 
 ## Contents
 
@@ -17,7 +17,7 @@ Current library has been built as Java Library Project in Netbeans 7.0.1
 Source code (EasyFSM.zip) can be extracted and built in a Netbeans IDE 
 or can even be ported to an Eclipse environment.
 
-## To Use Library:
+## To Use Library
 
 Add EasyFSM.jar to the Java Library folder of your project or Java Installation.
 Ensure that the CLASSPATH variable of your build environment has the EasyFSM.jar
