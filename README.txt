@@ -1,8 +1,10 @@
-EasyFSM (A Java Library; to facilitate Finite State Machine (FSM) creation.
----------------------------------------------------------------------------
+# EasyFSM (A Java Library; to facilitate Finite State Machine (FSM) creation.
 
-Description:
-------------
+## Contents
+
+.toc
+
+## Description
 
 This library facilitates creation of a Finite State Machine (FSM).
 Library generates a Finite State Machine (FSM) from a configuration
@@ -10,71 +12,66 @@ file specified while invoking the object for the FSM class.
 
 Current library has been built as Java Library Project in Netbeans 7.0.1
 
-To build
---------
+## To build
 
 Source code (EasyFSM.zip) can be extracted and built in a Netbeans IDE 
 or can even be ported to an Eclipse environment.
 
-To Use Library:
----------------
+## To Use Library:
 
 Add EasyFSM.jar to the Java Library folder of your project or Java Installation.
 Ensure that the CLASSPATH variable of your build environment has the EasyFSM.jar
 in its path.
 
-Usage:
-------
+## Usage
 
-Just a test example for usage:
+Just a test example for usage (Example1.java):
 
-<Code: Example1.java >
-
-/**
- * Example1 Code exemplifies the usage of FSM with a fixed path XML configuration file 
-**/
-    import FSM.FSM;
-
-    public class Example1 {
-        public static void testFSM() {
-            try {
-                FSM f = new FSM("C://config.xml", 
-                		new FSMAction() {
-                    @Override
-                    public boolean action(String curState, String message, String nextState, Object args) {
-                        javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message +" : " +nextState);
-                        /*
-                         * Here we can implement our login of how we wish to handle an action
-                         */
-                        return true;
-                    }
-                });
-                System.out.println(f.getCurrentState());
-                f.ProcessFSM("MOVELEFT");
-                System.out.println(f.getCurrentState());
-                f.ProcessFSM("MOVE");
-                System.out.println(f.getCurrentState());
-                f.ProcessFSM("MOVERIGHT");
-                System.out.println(f.getCurrentState());
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
-                Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        public static void main(String[] args) {
-            try {
-                testFSM();
-            } catch (Exception ex) {
-                Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-</Code>
+     /**
+      * Example1 Code exemplifies the usage of FSM with a fixed path XML configuration file 
+     **/
+	 import FSM.FSM;
+     
+	 public class Example1 {
+	     public static void testFSM() {
+		 try {
+		     FSM f = new FSM("C://config.xml", 
+				     new FSMAction() {
+			 @Override
+			 public boolean action(String curState, String message, String nextState, Object args) {
+			     javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message +" : " +nextState);
+			     /*
+			      * Here we can implement our login of how we wish to handle an action
+			      */
+			     return true;
+			 }
+		     });
+		     System.out.println(f.getCurrentState());
+		     f.ProcessFSM("MOVELEFT");
+		     System.out.println(f.getCurrentState());
+		     f.ProcessFSM("MOVE");
+		     System.out.println(f.getCurrentState());
+		     f.ProcessFSM("MOVERIGHT");
+		     System.out.println(f.getCurrentState());
+		 } catch (ParserConfigurationException ex) {
+		     Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+		 } catch (SAXException ex) {
+		     Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+		 } catch (IOException ex) {
+		     Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+		 }
+	     }
+     
+	     public static void main(String[] args) {
+		 try {
+		     testFSM();
+		 } catch (Exception ex) {
+		     Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+		 }
+	     }
+	 }
+	 
+     </Code>
 
 <Code: Example2.java >
 
@@ -157,4 +154,3 @@ XML Configuration file should be of the following format:
 	</STATE>
 	
 </FSM>
-
