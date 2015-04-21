@@ -1,4 +1,4 @@
-# EasyFSM (A Java Library; to facilitate Finite State Machine (FSM) creation.
+# EasyFSM - A Java Library; to facilitate Finite State Machine (FSM) creation.
 
 ## Contents
 
