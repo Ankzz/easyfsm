@@ -30,14 +30,13 @@ Just a test example for usage (Example1.java):
      /**
       * Example1 Code exemplifies the usage of FSM with a fixed path XML configuration file 
      **/
-	 import FSM.FSM;
+        import FSM.FSM;
      
-	 public class Example1 {
+         public class Example1 {
 	     public static void testFSM() {
-		 try {
-		     FSM f = new FSM("C://config.xml", 
-				     new FSMAction() {
-			 @Override
+	         try {
+		     FSM f = new FSM("C://config.xml", new FSMAction() {
+		         @Override
 			 public boolean action(String curState, String message, String nextState, Object args) {
 			     javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message +" : " +nextState);
 			     /*
@@ -61,34 +60,32 @@ Just a test example for usage (Example1.java):
 		     Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
 		 }
 	     }
-     
+ 
 	     public static void main(String[] args) {
-		 try {
+	         try {
 		     testFSM();
 		 } catch (Exception ex) {
 		     Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
 		 }
 	     }
 	 }
-	 
-     </Code>
+ 
 
-<Code: Example2.java >
+Another example (Example2.java):
 
-/**
- * Example2 Code exemplifies the usage of FSM with a XML configuration file specified
- * within the project as resource.
-**/
+    /**
+     * Example2 Code exemplifies the usage of FSM with a XML configuration file specified
+     * within the project as resource.
+    **/
     import FSM.FSM;
 
     public class Example2 {
-    
-        private String _configFileName              = "resource/config.xml";
-        
+ 
+        private String _configFileName = "resource/config.xml";
+ 
         public static void testFSM() {
             try {
-                FSM f = new FSM(this.getClass().getClassLoader().getResourceAsStream(_configFileName), 
-                		new FSMAction() {
+                FSM f = new FSM(this.getClass().getClassLoader().getResourceAsStream(_configFileName), new FSMAction() {
                     @Override
                     public boolean action(String curState, String message, String nextState, Object args) {
                         javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message +" : " +nextState);
@@ -123,34 +120,30 @@ Just a test example for usage (Example1.java):
         }
     }
     
-</Code>
 
 XML Configuration file should be of the following format:
 
-<?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-    Document   : config.xml
-    Created on : 22 March, 2013, 9:05 AM
-    Author     : ANKIT
-    Description:
-        File specifies states and transition of an FSM.
-        This is an example file.
--->
+    <!--
+        Document   : config.xml
+        Created on : 22 March, 2013, 9:05 AM
+        Author     : ANKIT
+        Description:
+            File specifies states and transition of an FSM.
+            This is an example file.
+    -->
 
-<FSM>
-	<STATE id="START" type="ID">
-		<MESSAGE id="MOVE" action="move" nextState="START"/>
-		<MESSAGE id="MOVELEFT" action="moveLeft" nextState="INTERMEDIATE"/>
-		<MESSAGE id="MOVERIGHT" action="moveRight" nextState="STOP"/>
+    <FSM>
+        <STATE id="START" type="ID">
+	    <MESSAGE id="MOVE" action="move" nextState="START" />
+	    <MESSAGE id="MOVELEFT" action="moveLeft" nextState="INTERMEDIATE" />
+	    <MESSAGE id="MOVERIGHT" action="moveRight" nextState="STOP" />
 	</STATE>
 	<STATE id="INTERMEDIATE">
-		<MESSAGE id="MOVELEFT" action="moveLeft" nextState="STOP"/>
-		<MESSAGE id="MOVERIGHT" action="moveRight" nextState="ANKIT"/>
+	    <MESSAGE id="MOVELEFT" action="moveLeft" nextState="STOP" />
+	    <MESSAGE id="MOVERIGHT" action="moveRight" nextState="ANKIT" />
 	</STATE>
-	<STATE id="STOP">
-	</STATE>
-	<STATE id="ANKIT">
-	</STATE>
-	
-</FSM>
+	<STATE id="STOP" />
+	<STATE id="ANKIT" />
+    </FSM>
