@@ -162,3 +162,9 @@ XML Configuration file should be of the following format:
             <STATE id="STOP" />
             <STATE id="ANKIT" />
     </FSM>
+
+And here is a diagram representing the transitions for this finite state machine:
+
+<center>
+<img src="README_1.png" alt="1">
+</center>
