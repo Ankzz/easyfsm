@@ -166,5 +166,5 @@ XML Configuration file should be of the following format:
 And here is a diagram representing the transitions for this finite state machine:
 
 <center>
-<img src="README_1.png" alt="1">
+<img src="images/README_1.png" alt="1">
 </center>
