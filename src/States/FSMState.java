@@ -23,10 +23,13 @@
 **/
 package States;
 
+import Action.FSMAction;
 import Common.CustomXMLReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -37,8 +40,9 @@ import org.xml.sax.SAXException;
  */
 public class FSMState {
     
-    private String  _curState;
-    private HashMap _transitionMap; 
+    private final String  _curState;
+    private HashMap _transitionMap;
+    private HashMap _transitions;
     private String  _configFileName;
     private CustomXMLReader _reader;
     
@@ -75,6 +79,7 @@ public class FSMState {
     public FSMState(String state, HashMap map){
         this._curState = state;
         this._transitionMap = map;
+        updateNewTransitionMap();
     }
     
     /**
@@ -86,6 +91,7 @@ public class FSMState {
      */
     public void addMessages(String message, Object action) {
         this._transitionMap.put(message, action);
+        updateNewTransitionMap();
     }
     
     /**
@@ -97,6 +103,40 @@ public class FSMState {
         File _f = new File( this._configFileName );
         if ( _f.exists()  && !_f.isDirectory() && this._reader != null) {
             this._transitionMap = this._reader.getStateInfo(this._curState);
+            updateNewTransitionMap();
+        }
+    }
+    
+    /**
+     *  Method to update new Transition Map<br/>
+     * @return
+     */
+    private void updateNewTransitionMap() {
+        if (_transitionMap!=null) {
+            if (_transitions==null) _transitions = new HashMap<String, FSMTransitionInfo>();
+            Iterator iter = _transitionMap.entrySet().iterator();
+            while(iter.hasNext()) {
+                Map.Entry next = (Map.Entry) iter.next();
+                String[] val = ((String) next.getValue()).split(":",2);
+                this._transitions.put(next.getKey(), 
+                        new FSMTransitionInfo(val[0], val[1]));
+            }
+        }
+    }
+    
+    /**
+     * Method to allow addition of Messages along with their own
+     * corresponding Action
+     * 
+     * @param message message for which action is being assigned
+     * @param act action method which needs to be assigned
+     */
+    public void addMessageAction(String message, FSMAction act) {
+        if (_transitions!=null) {
+            if (_transitions.containsKey(message)) {
+                ((FSMTransitionInfo)_transitions.get(message)).
+                        updateAction(act);
+            }
         }
     }
     
@@ -107,9 +147,14 @@ public class FSMState {
     public HashMap getTransitionMap() { return this._transitionMap;}
     
     /**
-     * Method to return Current State of the FSM
+     * Method to return State-Name of the FSM State
      * @return
      */
     public String getCurrentState() { return this._curState; }
     
+    /**
+     *  Method to return new entire Transition Map<br/>
+     * @return
+     */
+    public Map getNewTransitionMap() { return this._transitions; }
 }

@@ -23,11 +23,14 @@
 **/
 package States;
 
+import Action.FSMAction;
 import Common.CustomXMLReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -144,6 +147,74 @@ public class FSMStates {
      * @param f
      */
     public void setCurrentState(FSMState f) { this._curState = f; }
+    
+    /**
+     * This method allows to set specific action methods for a specific
+     * message/action.<br/> 
+     * If specified, this method shall be called when specified message is
+     * received in specified list of states.
+     * <br/>
+     *
+     * @param states List of states for which specified action method needs to
+     *               be initiated
+     * @param message Message/Action which is received 
+     * @param act Action method which needs to be initiated when message/action
+     *            is received
+     */
+    public void setAction(ArrayList<String> states, String message, 
+            FSMAction act) {
+        int count = states.size();
+        for (Iterator it = this._fsmStates.iterator(); it.hasNext();) {
+            FSMState i = (FSMState) it.next();
+            if (states.contains(i.getCurrentState())) {
+                i.addMessageAction(message, act);
+                count--;
+                if (count<=0) break;
+            }
+        }
+    }
+    
+    /**
+     * This method allows to set specific action methods for a specific
+     * message/action.<br/> 
+     * If specified, this method shall be called when specified message is
+     * received in specified state.
+     * <br/>
+     *
+     * @param state State for which this override action method needs to be 
+     *              initiated
+     * @param message Message/Action which is received 
+     * @param act Action method which needs to be initiated when message/action
+     *            is received
+     */
+    public void setAction(String state, String message, 
+            FSMAction act) {
+        setAction(new ArrayList(Arrays.asList(state)), message, act);
+    }
+    
+    /**
+     * This method allows to set specific action methods for a specific
+     * message/action.<br/> 
+     * If specified, this method shall be called when specified message is
+     * received in any state.
+     * <br/>
+     * 
+     * @param message Message/Action which is received 
+     * @param act Action method which needs to be initiated when message/action
+     *            is received
+     */
+    public void setAction(String message, FSMAction act) {
+        ArrayList states = (ArrayList) getAllStates();
+        int count = states.size();
+        for (Iterator it = this._fsmStates.iterator(); it.hasNext();) {
+            FSMState i = (FSMState) it.next();
+            if (states.contains(i)) {
+                i.addMessageAction(message, act);
+                count--;
+                if (count<=0) break;
+            }
+        }    
+    }
     
     /**
      * This method allows to get the current state of the FSM

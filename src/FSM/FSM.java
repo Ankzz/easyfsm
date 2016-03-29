@@ -26,8 +26,11 @@ package FSM;
 import Action.FSMAction;
 import States.FSMState;
 import States.FSMStates;
+import States.FSMTransitionInfo;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -212,24 +215,40 @@ public class FSM {
      */
     public Object ProcessFSM(String recvdMsgId) {
         Object _r = null;
-        _r = this._fsm.getCurrentState().getTransitionMap().get(recvdMsgId);
+        _r = this._fsm.getCurrentState().getNewTransitionMap().get(recvdMsgId);
         if ( null != _r) {
-            Object[] _t = ((String)_r).split(":",2);
+            String[] _t = new String[2];
+            _t[0] = ((FSMTransitionInfo)_r).getActionName();
+            _t[1] = ((FSMTransitionInfo)_r).getNextState();
             boolean status = true;
             for (Object _f: this._fsm.getAllStates()) {
                 if( ((FSMState)_f).getCurrentState().equals((String)_t[1])) {
-                    if ( null != this._action) {
+                    /* Check if the action specific to each message exists
+                       If not, then in this case call the generic action function
+                       
+                    */
+                    FSMAction act = ((FSMTransitionInfo)_r).getAction();
+                    if (act!=null) {
+                        status = act.action(this._fsm.getCurrentState().getCurrentState(), 
+                                (String)_t[0], (String)_t[1], this._sharedData);
+                    } else if ( null != this._action) {
                         status = 
                         this._action.action(this._fsm.getCurrentState().getCurrentState(), 
                                 (String)_t[0], (String)_t[1], this._sharedData);
                     }
+                    
                     if(status) {
                         this._fsm.setCurrentState((FSMState)_f);
-                    }
-                    if ( null != this._action) {
-                        this._action.afterTransition(this._fsm.getCurrentState().getCurrentState(), 
+                        
+                        if (act!=null) {
+                            act.afterTransition(this._fsm.getCurrentState().getCurrentState(), 
                                 (String)_t[0], (String)_t[1], this._sharedData);
+                        }else if ( null != this._action) {
+                            this._action.afterTransition(this._fsm.getCurrentState().getCurrentState(), 
+                                    (String)_t[0], (String)_t[1], this._sharedData);
+                        }
                     }
+                    
                     break;
                 }
             }
@@ -252,4 +271,35 @@ public class FSM {
      *              <b>Note:</b> Call to this function overwrites any previous shared data.
      */
     public void setShareData(Object data) { this._sharedData = data; }
+    
+    /**
+     *
+     * @param states
+     * @param message
+     * @param act
+     */
+    public void setAction(ArrayList<String> states, String message, 
+            FSMAction act) {
+        _fsm.setAction(states, message, act);
+    }
+    
+    /**
+     *
+     * @param state
+     * @param message
+     * @param act
+     */
+    public void setAction(String state, String message, 
+            FSMAction act) {
+        setAction(new ArrayList(Arrays.asList(state)), message, act);
+    }
+    
+    /**
+     *
+     * @param message
+     * @param act
+     */
+    public void setAction(String message, FSMAction act) {
+        _fsm.setAction(message, act);
+    }
 }
