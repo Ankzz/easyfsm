@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Easyfsm by Ankzz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Easyfsm</h1>
+      <h2 class="project-tagline">A Finite State Machine Library implementation in Java</h2>
+      <a href="https://github.com/Ankzz/easyfsm" class="btn">View on GitHub</a>
+      <a href="https://github.com/Ankzz/easyfsm/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Ankzz/easyfsm/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><a name="toc1-0" title="EasyFSM - A Java Library to facilitate Finite State Machine (FSM) creation."></a></p>
+
+<h1>
+<a id="easyfsm---a-java-library-to-facilitate-finite-state-machine-fsm-creation" class="anchor" href="#easyfsm---a-java-library-to-facilitate-finite-state-machine-fsm-creation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>EasyFSM - A Java Library to facilitate Finite State Machine (FSM) creation.</h1>
+
+<p><a name="toc2-3" title="Contents"></a></p>
+
+<h2>
+<a id="contents" class="anchor" href="#contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contents</h2>
+
+<p><strong><a href="#toc2-8">Description</a></strong></p>
+
+<p><strong><a href="#toc2-17">To build</a></strong></p>
+
+<p><strong><a href="#toc2-23">To Use Library</a></strong></p>
+
+<p><strong><a href="#toc2-30">Usage</a></strong></p>
+
+<p><a name="toc2-8" title="Description"></a></p>
+
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+
+<p>This library facilitates creation of a Finite State Machine (FSM).
+Library generates a Finite State Machine (FSM) from a configuration
+file specified while invoking the object for the FSM class.</p>
+
+<p>Current library has been built as Java Library Project in Netbeans 7.0.1</p>
+
+<p><a name="toc2-17" title="To build"></a></p>
+
+<h2>
+<a id="to-build" class="anchor" href="#to-build" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To build</h2>
+
+<p>Source code (EasyFSM.zip) can be extracted and built in a Netbeans IDE 
+or can even be ported to an Eclipse environment.</p>
+
+<p><a name="toc2-23" title="To Use Library"></a></p>
+
+<h2>
+<a id="to-use-library" class="anchor" href="#to-use-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To Use Library</h2>
+
+<p>Add EasyFSM.jar to the Java Library folder of your project or Java Installation.
+Ensure that the CLASSPATH variable of your build environment has the EasyFSM.jar
+in its path.</p>
+
+<p><a name="toc2-30" title="Usage"></a></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Just a test example for usage (Example1.java):</p>
+
+<pre><code>/**
+ * Example1 Code exemplifies the usage of FSM with a fixed path XML configuration file 
+ **/
+import Action.FSMAction;
+import FSM.FSM;
+
+public class Example1 {
+    public static void testFSM() {
+        try {
+            FSM f = new FSM("C://config.xml", new FSMAction() {
+                @Override
+                public boolean action(String curState, String message, String nextState, Object args) {
+                    javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message + " : " + nextState);
+                    /*
+                     * Here we can implement our login of how we wish to handle
+                     * an action
+                     */
+                    return true;
+                }
+            });
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVELEFT");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVE");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVERIGHT");
+            System.out.println(f.getCurrentState());
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            testFSM();
+        } catch (Exception ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+} 
+</code></pre>
+
+<p>Another example (Example2.java):</p>
+
+<pre><code>/**
+ * Example2 Code exemplifies the usage of FSM with a XML configuration file specified
+ * within the project as resource.
+ **/
+import Action.FSMAction;
+import FSM.FSM;
+
+public class Example2 {
+
+    private String _configFileName = "resource/config.xml";
+
+    public static void testFSM() {
+        try {
+            FSM f = new FSM(this.getClass().getClassLoader().getResourceAsStream(_configFileName), new FSMAction() {
+                @Override
+                public boolean action(String curState, String message, String nextState, Object args) {
+                    javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message + " : " + nextState);
+                    /*
+                     * Here we can implement our login of how we wish to handle
+                     * an action
+                     */
+                    return true;
+                }
+            });
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVELEFT");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVE");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVERIGHT");
+            System.out.println(f.getCurrentState());
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            testFSM();
+        } catch (Exception ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+</code></pre>
+
+<p>Another example (Example3.java):</p>
+
+<pre><code>/**
+ * Example3 Code exemplifies the usage of FSM with a XML configuration file specified
+ * within the project as resource along with specific action function for a specific message
+ * under any state
+ **/
+import Action.FSMAction;
+import FSM.FSM;
+
+public class Example3 {
+
+    private String _configFileName = "resource/config.xml";
+
+    public static void testFSM() {
+        try {
+            FSM f = new FSM(this.getClass().getClassLoader().getResourceAsStream(_configFileName), new FSMAction() {
+                @Override
+                public boolean action(String curState, String message, String nextState, Object args) {
+                    javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message + " : " + nextState);
+                    /*
+                     * Here we can implement our login of how we wish to handle
+                     * an action
+                     */
+                    return true;
+                }
+            });
+            f.setAction("MOVELEFT", new FSMAction() {
+                @Override
+                public boolean action(String curState, String message, String nextState, Object args) {
+                    System.out.println("Customized moveLeft!");
+                    return true;
+                }
+            });
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVELEFT");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVE");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVERIGHT");
+            System.out.println(f.getCurrentState());
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            testFSM();
+        } catch (Exception ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+</code></pre>
+
+<p>Another example (Example4.java):</p>
+
+<pre><code>/**
+ * Example4 Code exemplifies the usage of FSM with a XML configuration file specified
+ * within the project as resource along with specific action function for a specific message
+ * under specific state
+ **/
+import Action.FSMAction;
+import FSM.FSM;
+
+public class Example4 {
+
+    private String _configFileName = "resource/config.xml";
+
+    public static void testFSM() {
+        try {
+            FSM f = new FSM(this.getClass().getClassLoader().getResourceAsStream(_configFileName), new FSMAction() {
+                @Override
+                public boolean action(String curState, String message, String nextState, Object args) {
+                    javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message + " : " + nextState);
+                    /*
+                     * Here we can implement our login of how we wish to handle
+                     * an action
+                     */
+                    return true;
+                }
+            });
+            f.setAction("START", "MOVELEFT", new FSMAction() {
+                @Override
+                public boolean action(String curState, String message, String nextState, Object args) {
+                    System.out.println("Customized moveLeft!");
+                    return true;
+                }
+            });
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVELEFT");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVE");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVERIGHT");
+            System.out.println(f.getCurrentState());
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            testFSM();
+        } catch (Exception ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+</code></pre>
+
+<p>XML Configuration file should be of the following format:</p>
+
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;!--
+    Document   : config.xml
+    Created on : 22 March, 2013, 9:05 AM
+    Author     : ANKIT
+    Description:
+        File specifies states and transition of an FSM.
+        This is an example file.
+--&gt;
+
+&lt;FSM&gt;
+        &lt;STATE id="START" type="ID"&gt;
+                &lt;MESSAGE id="MOVE" action="move" nextState="START" /&gt;
+                &lt;MESSAGE id="MOVELEFT" action="moveLeft" nextState="INTERMEDIATE" /&gt;
+                &lt;MESSAGE id="MOVERIGHT" action="moveRight" nextState="STOP" /&gt;
+        &lt;/STATE&gt;
+        &lt;STATE id="INTERMEDIATE"&gt;
+                &lt;MESSAGE id="MOVELEFT" action="moveLeft" nextState="STOP" /&gt;
+                &lt;MESSAGE id="MOVERIGHT" action="moveRight" nextState="ANKIT" /&gt;
+        &lt;/STATE&gt;
+        &lt;STATE id="STOP" /&gt;
+        &lt;STATE id="ANKIT" /&gt;
+&lt;/FSM&gt;
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Ankzz/easyfsm">Easyfsm</a> is maintained by <a href="https://github.com/Ankzz">Ankzz</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
