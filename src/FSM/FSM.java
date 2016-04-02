@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -302,4 +303,12 @@ public class FSM {
     public void setAction(String message, FSMAction act) {
         _fsm.setAction(message, act);
     }
+    
+    /**
+     * Method returns all states associated with the FSM<br/>
+     * 
+     * @return Returns all states of the FSM
+     */
+    public List getAllStates() { return _fsm.getAllStates(); }
+    
 }
