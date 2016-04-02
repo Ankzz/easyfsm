@@ -302,4 +302,12 @@ public class FSM {
     public void setAction(String message, FSMAction act) {
         _fsm.setAction(message, act);
     }
+
+    /**
+     * Method returns all states associated with the FSM<br/>
+     * 
+     * @return Returns all states of the FSM
+     */
+    public List getAllStates() { return _fsm.getAllStates(); }
+    
 }
