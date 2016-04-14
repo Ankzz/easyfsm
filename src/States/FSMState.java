@@ -27,6 +27,8 @@ import Action.FSMAction;
 import Common.CustomXMLReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,7 +40,7 @@ import org.xml.sax.SAXException;
  * 
  * @author ANKIT
  */
-public class FSMState {
+public class FSMState implements java.io.Serializable {
     
     private final String  _curState;
     private HashMap _transitionMap;
@@ -110,6 +112,7 @@ public class FSMState {
     /**
      *  Method to update new Transition Map<br/>
      * @return
+    private void updateNewTransitionMap() {
      */
     private void updateNewTransitionMap() {
         if (_transitionMap!=null) {

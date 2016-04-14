@@ -47,7 +47,7 @@ import org.xml.sax.SAXException;
  * @version 1.00
  * @author ANKIT
  */
-public class CustomXMLReader {
+public class CustomXMLReader implements java.io.Serializable {
     
     /*
      * This field specifies the file name
