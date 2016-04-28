@@ -43,6 +43,7 @@ import org.xml.sax.SAXException;
  * @author ANKIT
  */
 public class FSMStates implements java.io.Serializable {
+    private static final long serialVersionUID = -7575735494729831944L;
     
     private ArrayList _fsmStates;
     private ArrayList _states;

@@ -27,8 +27,6 @@ import Action.FSMAction;
 import Common.CustomXMLReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,6 +39,7 @@ import org.xml.sax.SAXException;
  * @author ANKIT
  */
 public class FSMState implements java.io.Serializable {
+    private static final long serialVersionUID = -7020866901240150728L;
     
     private final String  _curState;
     private HashMap _transitionMap;

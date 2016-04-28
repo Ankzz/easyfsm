@@ -36,6 +36,7 @@ import Action.FSMAction;
  * @author ANKIT
  */
 public class FSMTransitionInfo implements java.io.Serializable {
+    private static final long serialVersionUID = 5836424827126595488L;
     
     private String action;
     private String nextState;
