@@ -71,4 +71,47 @@ public abstract class FSMAction {
          * Can be used by the calling function after transition has taken place
          */
     }
+
+
+    /**
+     * Method is called before action method is invoked.<br/>
+     * Not mandatory to be implemented; can be over-ridden<br/>
+     * 
+     * @param curState <br/>
+     * This value represents the Current State of the FSM. <br/>
+     * @param message <br/>
+     * This value specifies the Message for the FSM in Current state. <br/>
+     * @param args <br/>
+     * This value specifies the argument if any to be passed to the State Node.<br/>
+     * @param nextState <br/>
+     * This value specifies the State to be transitioned to; iff, Fsm transition
+     * happens.
+     */
+    public void entry(String curState, String message, String nextState, Object args) {
+        /*
+         * Can be used by the calling function after transition has taken place
+         */
+    }
+
+    /**
+     * Method is called after action method is invoked. This method is invoked<br/>
+     * irrespective of transition status.<br/>
+     * Not mandatory to be implemented; can be over-ridden<br/>
+     * 
+     * @param curState <br/>
+     * This value represents the Current State of the FSM. <br/>
+     * @param message <br/>
+     * This value specifies the Message for the FSM in Current state. <br/>
+     * @param args <br/>
+     * This value specifies the argument if any to be passed to the State Node.<br/>
+     * @param nextState <br/>
+     * This value specifies the State to be transitioned to; iff, Fsm transition
+     * happens.
+     */
+    public void exit(String curState, String message, String nextState, Object args) {
+        /*
+         * Can be used by the calling function after transition has taken place
+         */
+    }
+    
 }

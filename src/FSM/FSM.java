@@ -226,10 +226,12 @@ public class FSM {
                 if( ((FSMState)_f).getCurrentState().equals((String)_t[1])) {
                     /* Check if the action specific to each message exists
                        If not, then in this case call the generic action function
-                       
                     */
                     FSMAction act = ((FSMTransitionInfo)_r).getAction();
                     if (act!=null) {
+                        /* If customized action is declared, call an entry function */
+                        act.entry(this._fsm.getCurrentState().getCurrentState(), 
+                                (String)_t[0], (String)_t[1], this._sharedData);
                         status = act.action(this._fsm.getCurrentState().getCurrentState(), 
                                 (String)_t[0], (String)_t[1], this._sharedData);
                     } else if ( null != this._action) {
@@ -249,7 +251,12 @@ public class FSM {
                                     (String)_t[0], (String)_t[1], this._sharedData);
                         }
                     }
-                    
+
+                    if (act!=null) {
+                        /* Exit function called irrespective of transition status */
+                        act.exit(this._fsm.getCurrentState().getCurrentState(), 
+                                (String)_t[0], (String)_t[1], this._sharedData);
+                    }
                     break;
                 }
             }
