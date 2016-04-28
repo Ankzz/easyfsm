@@ -29,8 +29,6 @@ import States.FSMStates;
 import States.FSMTransitionInfo;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,11 +79,7 @@ import org.xml.sax.SAXException;
  * 
  * @author ANKIT
  */
-public class FSM implements java.io.Serializable {
-    
-    /* Added to support Serializability */
-    private static final long serialVersionUID = -4817986591227138567L;
-    
+public class FSM {
     /*
      * Any FSM requires three things:
      * * States
@@ -93,8 +87,8 @@ public class FSM implements java.io.Serializable {
      * * Actions
      */
     private FSMStates _fsm;
-    private transient FSMAction _action;
-    private transient Object _sharedData;
+    private FSMAction _action;
+    private Object _sharedData;
     
     /**
      * Constructor allows to create a FSM from a specified file-name<br/>
@@ -139,7 +133,6 @@ public class FSM implements java.io.Serializable {
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
-     * @deprecated 
      */
     @Deprecated
     public FSM(FSMAction action) 
@@ -156,7 +149,6 @@ public class FSM implements java.io.Serializable {
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
-     * @deprecated 
      */
     @Deprecated
     public FSM(FSMAction action, Object sharedData) 
@@ -172,7 +164,6 @@ public class FSM implements java.io.Serializable {
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
-     * @deprecated 
      */
     @Deprecated
     public FSM() 
@@ -235,10 +226,12 @@ public class FSM implements java.io.Serializable {
                 if( ((FSMState)_f).getCurrentState().equals((String)_t[1])) {
                     /* Check if the action specific to each message exists
                        If not, then in this case call the generic action function
-                       
                     */
                     FSMAction act = ((FSMTransitionInfo)_r).getAction();
                     if (act!=null) {
+                        /* If customized action is declared, call an entry function */
+                        act.entry(this._fsm.getCurrentState().getCurrentState(), 
+                                (String)_t[0], (String)_t[1], this._sharedData);
                         status = act.action(this._fsm.getCurrentState().getCurrentState(), 
                                 (String)_t[0], (String)_t[1], this._sharedData);
                     } else if ( null != this._action) {
@@ -258,7 +251,12 @@ public class FSM implements java.io.Serializable {
                                     (String)_t[0], (String)_t[1], this._sharedData);
                         }
                     }
-                    
+
+                    if (act!=null) {
+                        /* Exit function called irrespective of transition status */
+                        act.exit(this._fsm.getCurrentState().getCurrentState(), 
+                                (String)_t[0], (String)_t[1], this._sharedData);
+                    }
                     break;
                 }
             }
@@ -320,30 +318,4 @@ public class FSM implements java.io.Serializable {
      */
     public List getAllStates() { return _fsm.getAllStates(); }
     
-    /**
-     * 
-     * @param aOutputStream Output Stream to which FSM object is written out
-     * @throws IOException
-     */
-    public final void writeObject(ObjectOutputStream aOutputStream) 
-            throws IOException {
-        aOutputStream.defaultWriteObject();
-    }
-    
-    /**
-     * 
-     * @param aInputStream Input Stream from which FSM Object is to be read
-     * @throws ClassNotFoundException
-     * @throws IOException
-     */
-    public void readObject(ObjectInputStream aInputStream) 
-            throws ClassNotFoundException, IOException {
-        aInputStream.defaultReadObject();
-    }
-    
-    /**
-     * 
-     * @param act Default Action method for the FSM
-     */
-    public void setDefaultFsmAction(FSMAction act) { _action = act; }
 }
