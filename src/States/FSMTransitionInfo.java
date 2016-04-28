@@ -35,10 +35,11 @@ import Action.FSMAction;
  * @version 1.00
  * @author ANKIT
  */
-public class FSMTransitionInfo {
+public class FSMTransitionInfo implements java.io.Serializable {
+    
     private String action;
     private String nextState;
-    private FSMAction _a;
+    private transient FSMAction _a;
     
     /**
      *

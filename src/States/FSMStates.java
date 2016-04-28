@@ -27,11 +27,7 @@ import Action.FSMAction;
 import Common.CustomXMLReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -46,8 +42,9 @@ import org.xml.sax.SAXException;
  * @version 1.00
  * @author ANKIT
  */
-public class FSMStates {
-    private List _fsmStates;
+public class FSMStates implements java.io.Serializable {
+    
+    private ArrayList _fsmStates;
     private ArrayList _states;
     private FSMState _curState;
     private String _configFileName="config/config.xml";
@@ -133,6 +130,7 @@ public class FSMStates {
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
+     * @deprecated 
      */
     @Deprecated
     public FSMStates() 
