@@ -321,5 +321,10 @@ public class FSM implements java.io.Serializable {
      * @return Returns all states of the FSM
      */
     public List getAllStates() { return _fsm.getAllStates(); }
-    
+ 
+    /**
+     * 
+     * @param act Default Action method for the FSM 
+     */
+    public void setDefaultFsmAction(FSMAction act) { _action = act; }    
 }
