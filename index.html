@@ -290,6 +290,82 @@ public class Example4 {
 }
 </code></pre>
 
+<p>Another example (Example5.java):</p>
+
+<pre><code>/**
+ * Example5 Code exemplifies the usage of FSM with a XML configuration file specified
+ * within the project as resource along with specific action function for a specific message
+ * under specific state with each action interface even specifying their own entry and exit
+ * methods customized
+ **/
+import Action.FSMAction;
+import FSM.FSM;
+
+public class Example5 {
+
+    private String _configFileName = "resource/config.xml";
+
+    public static void testFSM() {
+        try {
+            FSM f = new FSM(this.getClass().getClassLoader().getResourceAsStream(_configFileName), new FSMAction() {
+                @Override
+                public boolean action(String curState, String message, String nextState, Object args) {
+                    javax.swing.JOptionPane.showMessageDialog(null, curState + ":" + message + " : " + nextState);
+                    /*
+                     * Here we can implement our login of how we wish to handle
+                     * an action
+                     */
+                    return true;
+                }
+            });
+            f.setAction("START", "MOVELEFT", new FSMAction() {
+            @Override
+            public boolean action(String curState, String message, String nextState, Object args) {
+                System.out.println("Customized moveLeft!");
+                return false;
+            }
+
+            @Override
+            public void afterTransition(String curState, String message, String nextState, Object args) {
+                System.out.println("Customized After-Transition!!");
+            }
+
+            @Override
+            public void entry(String curState, String message, String nextState, Object args) {
+                System.out.println("Customized Entry!!");
+            }
+
+            @Override
+            public void exit(String curState, String message, String nextState, Object args) {
+                System.out.println("Customized Exit!!");
+            }
+            });
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVELEFT");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVE");
+            System.out.println(f.getCurrentState());
+            f.ProcessFSM("MOVERIGHT");
+            System.out.println(f.getCurrentState());
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            testFSM();
+        } catch (Exception ex) {
+            Logger.getLogger(TestOwnCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+</code></pre>
+
 <p>XML Configuration file should be of the following format:</p>
 
 <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
