@@ -79,7 +79,11 @@ import org.xml.sax.SAXException;
  * 
  * @author ANKIT
  */
-public class FSM {
+public class FSM implements java.io.Serializable {
+    
+    /* Added to support Serializability */
+    private static final long serialVersionUID = -4817986591227138567L;
+    
     /*
      * Any FSM requires three things:
      * * States
@@ -87,8 +91,8 @@ public class FSM {
      * * Actions
      */
     private FSMStates _fsm;
-    private FSMAction _action;
-    private Object _sharedData;
+    private transient FSMAction _action;
+    private transient Object _sharedData;
     
     /**
      * Constructor allows to create a FSM from a specified file-name<br/>
@@ -215,7 +219,7 @@ public class FSM {
      * @return Returns the Current State as String
      */
     public Object ProcessFSM(String recvdMsgId) {
-        Object _r = null;
+        Object _r;
         _r = this._fsm.getCurrentState().getNewTransitionMap().get(recvdMsgId);
         if ( null != _r) {
             String[] _t = new String[2];

@@ -72,7 +72,6 @@ public abstract class FSMAction {
          */
     }
 
-
     /**
      * Method is called before action method is invoked.<br/>
      * Not mandatory to be implemented; can be over-ridden<br/>
