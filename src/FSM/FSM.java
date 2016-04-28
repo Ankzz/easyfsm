@@ -29,8 +29,6 @@ import States.FSMStates;
 import States.FSMTransitionInfo;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -139,7 +137,6 @@ public class FSM implements java.io.Serializable {
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
-     * @deprecated 
      */
     @Deprecated
     public FSM(FSMAction action) 
@@ -156,7 +153,6 @@ public class FSM implements java.io.Serializable {
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
-     * @deprecated 
      */
     @Deprecated
     public FSM(FSMAction action, Object sharedData) 
@@ -172,7 +168,6 @@ public class FSM implements java.io.Serializable {
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
-     * @deprecated 
      */
     @Deprecated
     public FSM() 
@@ -327,30 +322,4 @@ public class FSM implements java.io.Serializable {
      */
     public List getAllStates() { return _fsm.getAllStates(); }
     
-    /**
-     * 
-     * @param aOutputStream Output Stream to which FSM object is written out
-     * @throws IOException
-     */
-    public final void writeObject(ObjectOutputStream aOutputStream) 
-            throws IOException {
-        aOutputStream.defaultWriteObject();
-    }
-    
-    /**
-     * 
-     * @param aInputStream Input Stream from which FSM Object is to be read
-     * @throws ClassNotFoundException
-     * @throws IOException
-     */
-    public void readObject(ObjectInputStream aInputStream) 
-            throws ClassNotFoundException, IOException {
-        aInputStream.defaultReadObject();
-    }
-    
-    /**
-     * 
-     * @param act Default Action method for the FSM
-     */
-    public void setDefaultFsmAction(FSMAction act) { _action = act; }
 }

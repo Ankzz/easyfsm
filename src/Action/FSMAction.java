@@ -71,7 +71,7 @@ public abstract class FSMAction {
          * Can be used by the calling function after transition has taken place
          */
     }
-    
+
     /**
      * Method is called before action method is invoked.<br/>
      * Not mandatory to be implemented; can be over-ridden<br/>
@@ -112,5 +112,5 @@ public abstract class FSMAction {
          * Can be used by the calling function after transition has taken place
          */
     }
-        
+    
 }
