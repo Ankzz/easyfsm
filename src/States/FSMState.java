@@ -46,6 +46,9 @@ public class FSMState implements java.io.Serializable {
     private HashMap _transitions;
     private String  _configFileName;
     private CustomXMLReader _reader;
+
+    private FSMStateAction stateEntry;
+    private FSMStateAction stateExit;
     
     /**
      * This Constructor allows to create a FSM with the initial state 
@@ -143,6 +146,22 @@ public class FSMState implements java.io.Serializable {
     }
     
     /**
+     * Method to set the Action method used to specify the exit method for<br/>
+     * this state<br/>
+     * 
+     * @param act
+     */
+    public void setBeforeTransition(FSMStateAction act) {this.stateEntry= act;}
+    
+    /**
+     * Method to set the Action method used to specify the exit method for<br/>
+     * this state<br/>
+     * 
+     * @param act
+     */
+    public void setAfterTransition(FSMStateAction act) {this.stateExit= act;}
+    
+    /**
      *  Method to return the entire Transition Map<br/>
      * @return
      */
@@ -159,4 +178,8 @@ public class FSMState implements java.io.Serializable {
      * @return
      */
     public Map getNewTransitionMap() { return this._transitions; }
+
+    public FSMStateAction getBeforeTransition() { return stateEntry; }
+    
+    public FSMStateAction getAfterTransition() { return stateExit; }
 }

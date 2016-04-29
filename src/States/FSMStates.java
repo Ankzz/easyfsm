@@ -216,6 +216,96 @@ public class FSMStates implements java.io.Serializable {
     }
     
     /**
+     * This method allows to set entry methods for a specific
+     * State.<br/> 
+     * If specified, this method shall be invoked before action method is 
+     * invoked when any message is received in specified state.
+     * <br/>
+     * 
+     * @param state State for which entry function is being assigned
+     * @param act Entry method which needs to be initiated when any message/action
+     *            is received on specified state
+     */
+    public void setStateBeforeTransition(String state, FSMStateAction act) {
+        for (Iterator it = this._fsmStates.iterator(); it.hasNext();) {
+            FSMState i = (FSMState) it.next();
+            if (i.getCurrentState().equals(state)) {
+                i.setBeforeTransition(act);
+                break;
+            }
+        }
+    }
+
+    /**
+     * This method allows to set entry methods for a specific
+     * State.<br/> 
+     * If specified, this method shall be invoked before action method is 
+     * invoked when any message is received in specified state.
+     * <br/>
+     * 
+     * @param states List of State for which entry function is being assigned<br/>
+     *               If passed null, entry method is applied to all states
+     * @param act Entry method which needs to be initiated when any message/action
+     *            is received on specified state
+     */
+    public void setStateBeforeTransition(ArrayList<String> states, 
+            FSMStateAction act) {
+        if (states==null) { states = _states;}
+        
+        for (Iterator it = this._fsmStates.iterator(); it.hasNext();) {
+            FSMState i = (FSMState) it.next();
+            if (states.contains(i.getCurrentState())) {
+                i.setBeforeTransition(act);
+            }
+        }
+    }
+
+    /**
+     * This method allows to set entry methods for a specific
+     * State.<br/> 
+     * If specified, this method shall be invoked after action method has been 
+     * invoked when any message is received in specified state.
+     * <br/>
+     * 
+     * @param state State for which exit function is being assigned
+     * @param act Exit method which needs to be initiated when any message/action
+     *            is received on specified state
+     */
+    public void setStateAfterTransition(String state, FSMStateAction act) {
+        for (Iterator it = this._fsmStates.iterator(); it.hasNext();) {
+            FSMState i = (FSMState) it.next();
+            if (i.getCurrentState().equals(state)) {
+                i.setAfterTransition(act);
+                break;
+            }
+        }    
+    }
+
+    /**
+     * This method allows to set entry methods for a specific
+     * State.<br/> 
+     * If specified, this method shall be invoked after action method has been 
+     * invoked when any message is received in specified state.
+     * <br/>
+     * 
+     * @param states List of State for which entry function is being assigned<br/>
+     *               If passed null, entry method is applied to all states
+     * @param act Exit method which needs to be initiated when any message/action
+     *            is received on specified state
+     */
+    public void setStateAfterTransition(ArrayList<String> states, 
+            FSMStateAction act) {
+        if (states==null) {states = _states;}
+        
+        for (Iterator it = this._fsmStates.iterator(); it.hasNext();) {
+            FSMState i = (FSMState) it.next();
+            if (states.contains(i.getCurrentState())) {
+                i.setAfterTransition(act);
+            }
+        }
+    }
+
+    /**
      * This method allows to get the current state of the FSM
      * <br/>
      * 

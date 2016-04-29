@@ -25,6 +25,7 @@ package FSM;
 
 import Action.FSMAction;
 import States.FSMState;
+import States.FSMStateAction;
 import States.FSMStates;
 import States.FSMTransitionInfo;
 import java.io.IOException;
@@ -231,6 +232,12 @@ public class FSM implements java.io.Serializable {
                     /* Check if the action specific to each message exists
                        If not, then in this case call the generic action function
                     */
+                    FSMStateAction _a = ((FSMState)_f).getBeforeTransition();
+                    if (_a!=null) {
+                        _a.stateTransition(((FSMState)_f).getCurrentState(), 
+                                this._sharedData);
+                    }
+                    
                     FSMAction act = ((FSMTransitionInfo)_r).getAction();
                     if (act!=null) {
                         /* If customized action is declared, call an entry function */
@@ -261,6 +268,13 @@ public class FSM implements java.io.Serializable {
                         act.exit(this._fsm.getCurrentState().getCurrentState(), 
                                 (String)_t[0], (String)_t[1], this._sharedData);
                     }
+                    
+                    FSMStateAction _b = ((FSMState)_f).getAfterTransition();
+                    if (_b!=null) {
+                        _b.stateTransition(((FSMState)_f).getCurrentState(), 
+                                this._sharedData);
+                    }
+                    
                     break;
                 }
             }
@@ -314,7 +328,35 @@ public class FSM implements java.io.Serializable {
     public void setAction(String message, FSMAction act) {
         _fsm.setAction(message, act);
     }
+
+    public void setStatesBeforeTransition(String state, FSMStateAction act) {
+        _fsm.setStateBeforeTransition(state, act);
+    }
     
+    public void setStatesBeforeTransition(ArrayList<String> states, 
+            FSMStateAction act) {
+        _fsm.setStateBeforeTransition(states, act);
+    }
+
+    public void setStatesBeforeTransition(FSMStateAction act) {
+        ArrayList<String> l = null;
+        _fsm.setStateBeforeTransition(l, act);
+    }
+    
+    public void setStatesAfterTransition(String state, FSMStateAction act) {
+        _fsm.setStateAfterTransition(state, act);
+    }
+    
+    public void setStatesAfterTransition(ArrayList<String> states, 
+            FSMStateAction act) {
+        _fsm.setStateAfterTransition(states, act);
+    }
+
+    public void setStatesAfterTransition(FSMStateAction act) {
+        ArrayList<String> l = null;
+        _fsm.setStateAfterTransition(l, act);
+    }
+
     /**
      * Method returns all states associated with the FSM<br/>
      * 
